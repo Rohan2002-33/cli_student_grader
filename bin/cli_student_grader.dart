@@ -23,7 +23,7 @@ void main() {
     var input = stdin.readLineSync() ?? "";
 
     switch (input) {
-      case "1": print("Coming soon...");
+      case "1": addStudent();
       case "2": print("Coming soon...");
       case "3": print("Coming soon...");
       case "4": print("Coming soon...");
@@ -36,4 +36,19 @@ void main() {
   } while (running);
 
   print("Goodbye!");
+}
+void addStudent() {
+  stdout.write("\nEnter student name: ");
+  var name = stdin.readLineSync() ?? "Unknown";
+
+  var student = <String, dynamic>{
+    "name": name,
+    "scores": <int>[],
+    "subjects": {...availableSubjects},
+    "bonus": null,
+    "comment": null,
+  };
+
+  students.add(student);
+  print("✓ Student '$name' added!");
 }
