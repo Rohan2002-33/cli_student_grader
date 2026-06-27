@@ -25,8 +25,8 @@ void main() {
     switch (input) {
       case "1": addStudent();
       case "2": recordScore();
-      case "3": print("Coming soon...");
-      case "4": print("Coming soon...");
+      case "3": addBonusPoints();
+      case "4": addComment();
       case "5": print("Coming soon...");
       case "6": print("Coming soon...");
       case "7": print("Coming soon...");
@@ -77,4 +77,43 @@ void recordScore() {
 
   (student["scores"] as List<int>).add(score);
   print("✓ Score $score recorded for ${student["name"]}!");
+}
+void addBonusPoints() {
+  if (students.isEmpty) { print("No students yet."); return; }
+
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+  stdout.write("Pick student number: ");
+  var pick = int.tryParse(stdin.readLineSync() ?? "0") ?? 0;
+  if (pick < 1 || pick > students.length) { print("Invalid."); return; }
+  var student = students[pick - 1];
+
+  stdout.write("Enter bonus (1-10): ");
+  var bonusValue = int.tryParse(stdin.readLineSync() ?? "0") ?? 0;
+
+  if (student["bonus"] == null) {
+    student["bonus"] ??= bonusValue;
+    print("✓ Bonus $bonusValue added!");
+  } else {
+    print("✗ Bonus already set to ${student["bonus"]}!");
+  }
+}
+
+void addComment() {
+  if (students.isEmpty) { print("No students yet."); return; }
+
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+  stdout.write("Pick student number: ");
+  var pick = int.tryParse(stdin.readLineSync() ?? "0") ?? 0;
+  if (pick < 1 || pick > students.length) { print("Invalid."); return; }
+  var student = students[pick - 1];
+
+  stdout.write("Enter comment: ");
+  student["comment"] = stdin.readLineSync();
+
+  String display = (student["comment"] as String?)?.toUpperCase() ?? "No comment provided";
+  print("✓ Comment saved: $display");
 }
