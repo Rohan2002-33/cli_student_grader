@@ -24,7 +24,7 @@ void main() {
 
     switch (input) {
       case "1": addStudent();
-      case "2": print("Coming soon...");
+      case "2": recordScore();
       case "3": print("Coming soon...");
       case "4": print("Coming soon...");
       case "5": print("Coming soon...");
@@ -51,4 +51,30 @@ void addStudent() {
 
   students.add(student);
   print("✓ Student '$name' added!");
+}
+void recordScore() {
+  if (students.isEmpty) { print("No students yet."); return; }
+
+  for (int i = 0; i < students.length; i++) {
+    print("${i + 1}. ${students[i]["name"]}");
+  }
+
+  stdout.write("Pick student number: ");
+  var pick = int.tryParse(stdin.readLineSync() ?? "0") ?? 0;
+  if (pick < 1 || pick > students.length) { print("Invalid."); return; }
+  var student = students[pick - 1];
+
+  print("Subjects: ${student["subjects"]}");
+  stdout.write("Enter subject: ");
+  stdin.readLineSync();
+
+  int score = -1;
+  while (score < 0 || score > 100) {
+    stdout.write("Enter score (0-100): ");
+    score = int.tryParse(stdin.readLineSync() ?? "-1") ?? -1;
+    if (score < 0 || score > 100) print("✗ Must be 0-100!");
+  }
+
+  (student["scores"] as List<int>).add(score);
+  print("✓ Score $score recorded for ${student["name"]}!");
 }
