@@ -29,7 +29,7 @@ void main() {
       case "4": addComment();
       case "5": viewAllStudents();
       case "6": viewReportCard();
-      case "7": print("Coming soon...");
+      case "7": classSummary();
       case "8": running = false;
       default:  print("Invalid option.");
     }
@@ -193,4 +193,50 @@ void viewReportCard() {
   print(row("Comment", comment));
   print(border);
   print("★ Feedback: $feedback\n");
+}
+void classSummary() {
+  if (students.isEmpty) { print("No students yet."); return; }
+
+  int total = students.length;
+  double highest = 0, lowest = 101, classTotal = 0;
+  int passCount = 0;
+  Set<String> uniqueGrades = {};
+
+  for (var s in students) {
+    double avg = calculateAvg(s);
+    classTotal += avg;
+    if (avg > highest) highest = avg;
+    if (avg < lowest)  lowest  = avg;
+
+    var scores = s["scores"] as List;
+    if (scores.isNotEmpty && avg >= 60) passCount++;
+
+    String g;
+    if (avg >= 90)      g = "A";
+    else if (avg >= 80) g = "B";
+    else if (avg >= 70) g = "C";
+    else if (avg >= 60) g = "D";
+    else                g = "F";
+    uniqueGrades.add(g);
+  }
+
+  double classAvg = classTotal / total;
+
+  var summaryLines = [
+    for (var s in students)
+      "  ${s["name"]}: ${calculateAvg(s).toStringAsFixed(1)}",
+  ];
+
+  print("""
+======= CLASS SUMMARY =======
+Total Students  : $total
+Class Average   : ${classAvg.toStringAsFixed(2)}
+Highest Average : ${highest.toStringAsFixed(2)}
+Lowest Average  : ${lowest.toStringAsFixed(2)}
+Passing (>=60)  : $passCount / $total
+Unique Grades   : $uniqueGrades
+--- Per Student ---
+${summaryLines.join("\n")}
+=============================
+""");
 }
