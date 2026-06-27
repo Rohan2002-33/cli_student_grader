@@ -23,15 +23,24 @@ void main() {
     var input = stdin.readLineSync() ?? "";
 
     switch (input) {
-      case "1": addStudent();
-      case "2": recordScore();
-      case "3": addBonusPoints();
-      case "4": addComment();
-      case "5": viewAllStudents();
-      case "6": viewReportCard();
-      case "7": classSummary();
-      case "8": running = false;
-      default:  print("Invalid option.");
+      case "1": 
+          addStudent();
+      case "2": 
+          recordScore();
+      case "3": 
+          addBonusPoints();
+      case "4": 
+          addComment();
+      case "5": 
+          viewAllStudents();
+      case "6": 
+          viewReportCard();
+      case "7": 
+          classSummary();
+      case "8": 
+          running = false;
+      default:  
+          print("Invalid option.");
     }
   } while (running);
 
@@ -53,7 +62,10 @@ void addStudent() {
   print("✓ Student '$name' added!");
 }
 void recordScore() {
-  if (students.isEmpty) { print("No students yet."); return; }
+  if (students.isEmpty) { 
+    print("No students yet."); 
+    return; 
+    }
 
   for (int i = 0; i < students.length; i++) {
     print("${i + 1}. ${students[i]["name"]}");
@@ -66,7 +78,7 @@ void recordScore() {
 
   print("Subjects: ${student["subjects"]}");
   stdout.write("Enter subject: ");
-  stdin.readLineSync();
+  var subject = stdin.readLineSync() ?? "";
 
   int score = -1;
   while (score < 0 || score > 100) {
@@ -76,7 +88,7 @@ void recordScore() {
   }
 
   (student["scores"] as List<int>).add(score);
-  print("✓ Score $score recorded for ${student["name"]}!");
+  print("✓ Score $score recorded for ${student["name"]} in $subject!");
 }
 void addBonusPoints() {
   if (students.isEmpty) { print("No students yet."); return; }
